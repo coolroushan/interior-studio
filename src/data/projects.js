@@ -1,0 +1,38 @@
+export const projects = [
+  {
+    id: 1,
+    title: "Hillside Residence",
+    category: "Residential",
+    location: "Patna, India",
+    year: "2026",
+    image: "/images/project-hillside.jpg",
+    size: "large",
+  },
+  {
+    id: 2,
+    title: "The Courtyard House",
+    category: "Residential",
+    location: "Delhi, India",
+    year: "2026",
+    image: "/images/project-courtyard.jpg",
+    size: "medium",
+  },
+  {
+    id: 3,
+    title: "The Atelier Office",
+    category: "Commercial",
+    location: "Mumbai, India",
+    year: "2025",
+    image: "/images/project-office.jpg",
+    size: "small",
+  },
+  {
+    id: 4,
+    title: "Lakeview Villa",
+    category: "Residential",
+    location: "Udaipur, India",
+    year: "2025",
+    image: "/images/project-lakeview.jpg",
+    size: "small",
+  },
+];

@@ -1,0 +1,432 @@
+@import "tailwindcss";
+
+/* =========================================================
+   INTERIOR DESIGN — GLOBAL DESIGN SYSTEM
+   ========================================================= */
+
+:root {
+  --background: #f3f0ea;
+  --surface: #ebe6de;
+  --surface-light: #f8f6f2;
+
+  --foreground: #171714;
+  --muted: #716e67;
+
+  --accent: #9a8064;
+  --accent-light: #d8ccbc;
+
+  --dark: #171714;
+  --dark-soft: #22221e;
+
+  --white: #ffffff;
+  --border: rgba(23, 23, 20, 0.12);
+
+  --container: 1440px;
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body,
+button,
+a {
+  cursor: default;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+/* Remove default link styling */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Images */
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* Selection */
+
+::selection {
+  background: var(--foreground);
+  color: var(--white);
+}
+
+/* =========================================================
+   CUSTOM SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #aaa49b;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground);
+}
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.container-interior {
+  width: min(100% - 40px, var(--container));
+  margin-inline: auto;
+}
+
+@media (max-width: 640px) {
+  .container-interior {
+    width: min(100% - 28px, var(--container));
+  }
+}
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.section-padding {
+  padding-block: 120px;
+}
+
+@media (max-width: 1024px) {
+  .section-padding {
+    padding-block: 90px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-padding {
+    padding-block: 70px;
+  }
+}
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+.display-heading {
+  font-size: clamp(3.5rem, 8vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+  font-weight: 500;
+}
+
+.heading-xl {
+  font-size: clamp(3rem, 6vw, 6.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+  font-weight: 500;
+}
+
+.heading-lg {
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 500;
+}
+
+.heading-md {
+  font-size: clamp(2rem, 3vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+
+.body-large {
+  font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+  line-height: 1.65;
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* =========================================================
+   COLORS
+   ========================================================= */
+
+.bg-interior {
+  background-color: var(--background);
+}
+
+.bg-surface {
+  background-color: var(--surface);
+}
+
+.bg-dark {
+  background-color: var(--dark);
+}
+
+.text-interior {
+  color: var(--foreground);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-light {
+  color: var(--white);
+}
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.interior-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  min-height: 48px;
+  padding: 0 22px;
+
+  border: 1px solid var(--foreground);
+  border-radius: 999px;
+
+  background: transparent;
+  color: var(--foreground);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  transition:
+    background-color 300ms ease,
+    color 300ms ease,
+    transform 300ms ease;
+}
+
+.interior-button:hover {
+  background: var(--foreground);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.interior-button-dark {
+  border-color: var(--white);
+  color: var(--white);
+}
+
+.interior-button-dark:hover {
+  background: var(--white);
+  color: var(--foreground);
+}
+
+/* =========================================================
+   IMAGE / MEDIA
+   ========================================================= */
+
+.media-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.media-wrapper img,
+.media-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.media-wrapper:hover img,
+.media-wrapper:hover video {
+  transform: scale(1.04);
+}
+
+/* =========================================================
+   PROJECT CARD
+   ========================================================= */
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.project-card-image {
+  overflow: hidden;
+}
+
+.project-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transition:
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card:hover .project-card-image img {
+  transform: scale(1.045);
+}
+
+/* =========================================================
+   HAIRLINE
+   ========================================================= */
+
+.hairline {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* =========================================================
+   HERO OVERLAY
+   ========================================================= */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.28) 0%,
+      rgba(0, 0, 0, 0.08) 35%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+}
+
+/* =========================================================
+   VIDEO
+   ========================================================= */
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+/* =========================================================
+   CUSTOM CURSOR DOT / INTERACTION
+   ========================================================= */
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 999px;
+
+  background: var(--white);
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   MARQUEE
+   ========================================================= */
+
+.marquee {
+  display: flex;
+  width: max-content;
+
+  animation: marquee 25s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* =========================================================
+   REVEAL
+   ========================================================= */
+
+.reveal-mask {
+  overflow: hidden;
+}
+
+.reveal-text {
+  will-change: transform;
+}
+
+/* =========================================================
+   UTILITY
+   ========================================================= */
+
+.no-select {
+  user-select: none;
+}
+
+.overflow-clip {
+  overflow: clip;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .display-heading {
+    font-size: clamp(3rem, 15vw, 5rem);
+  }
+
+  .heading-xl {
+    font-size: clamp(2.7rem, 12vw, 4.5rem);
+  }
+}
