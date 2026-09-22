@@ -1,325 +1,173 @@
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
+
+// Verified, high-quality premium interior images
+const slides = [
+  {
+    id: 1,
+    main: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+    sub: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    alt: "Contemporary living space with natural light"
+  },
+  {
+    id: 2,
+    main: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+    sub: "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    alt: "Warm minimalist interior architecture"
+  },
+  {
+    id: 3,
+    main: "https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", 
+    sub: "https://images.unsplash.com/photo-1616137422495-1e9e46e2aa77?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    alt: "Luxury residential material details"
+  }
+];
 
 const StudioIntro = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Unhurried auto-play
+  useEffect(() => {
+    if (isHovered) return;
+    
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 5500); 
+    
+    return () => clearInterval(timer);
+  }, [isHovered]);
+
+  const handleNext = () => setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  const handlePrev = () => setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+
+  const premiumEasing = [0.16, 1, 0.3, 1];
+
+  const textFadeUp = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 1, ease: premiumEasing } }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.05 } }
+  };
+
   return (
-    <section
-      id="studio"
-     className="
-  overflow-hidden
-  bg-[#f3f0ea]
-  pb-20
-  pt-14
-  text-[#171714]
-  sm:pb-28
-  sm:pt-18
-  lg:pb-32
-  lg:pt-20
-"
+    <section 
+      className="relative w-full bg-[#F9F8F6] text-[#1A1A1A] py-14 md:py-20 lg:py-24 overflow-hidden"
+      aria-label="Studio Introduction"
     >
-      <div className="container-interior">
-
-        {/* =====================================================
-            TOP ROW
-            ===================================================== */}
-
-        <div className="mb-10 flex items-center justify-between sm:mb-14 lg:mb-16">
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: -30,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.5,
-            }}
-            transition={{
-              duration: 0.8,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="flex items-center gap-3"
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
+        
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Column: Typography */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={staggerContainer}
+            className="lg:col-span-5 flex flex-col z-20"
           >
-            <span className="text-xs text-[#9a8064]">
-              01
-            </span>
-
-            <span className="eyebrow text-[#716e67]">
+            <motion.span variants={textFadeUp} className="block tracking-[0.25em] text-[11px] font-medium uppercase text-[#666666] mb-4 lg:mb-6">
               The Studio
-            </span>
+            </motion.span>
+
+            <motion.h2 variants={textFadeUp} className="text-3xl md:text-4xl lg:text-[3.25rem] leading-[1.1] font-serif font-light text-[#1A1A1A] tracking-tight mb-5">
+              We design spaces <br className="hidden lg:block"/>
+              with a sense of place.
+            </motion.h2>
+
+            <motion.p variants={textFadeUp} className="text-[#5A5A5A] text-sm md:text-base font-light leading-relaxed max-w-[400px] mb-7">
+              Our studio brings together architecture, interiors, materials and craftsmanship to create spaces that are personal, functional and enduring.
+            </motion.p>
+
+            <motion.div variants={textFadeUp}>
+              <a href="#discover" className="group inline-flex items-center text-xs font-medium uppercase tracking-[0.15em] border-b border-[#1A1A1A] pb-1.5 hover:text-[#666666] hover:border-[#666666] transition-colors duration-300">
+                Discover Our Studio
+                <ArrowRight className="ml-3 w-3.5 h-3.5 transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out" />
+              </a>
+            </motion.div>
           </motion.div>
 
-          <motion.span
-            initial={{
-              opacity: 0,
-            }}
-            whileInView={{
-              opacity: 1,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              delay: 0.2,
-              duration: 0.8,
-            }}
-            className="eyebrow hidden text-[#716e67] sm:block"
+          {/* Right Column: Interactive Editorial Crossfade */}
+          <div 
+            className="lg:col-start-6 lg:col-span-7 relative w-full h-[360px] sm:h-[400px] md:h-[460px] lg:h-[520px] mt-8 lg:mt-0"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
-            Interior Architecture · 2026
-          </motion.span>
-        </div>
-
-        {/* =====================================================
-            MAIN CONTENT
-            ===================================================== */}
-
-        <div className="grid gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
-
-          {/* ===================================================
-              LEFT — LARGE HEADING
-              =================================================== */}
-
-          <div>
-            <div className="reveal-mask">
-              <motion.h2
-                initial={{
-                  y: "100%",
-                }}
-                whileInView={{
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.4,
-                }}
-                transition={{
-                  duration: 1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="
-                  heading-xl
-                  max-w-[850px]
-                "
-              >
-                We create spaces
-              </motion.h2>
-            </div>
-
-            <div className="reveal-mask">
-              <motion.h2
-                initial={{
-                  y: "100%",
-                }}
-                whileInView={{
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.4,
-                }}
-                transition={{
-                  delay: 0.08,
-                  duration: 1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="
-                  heading-xl
-                  max-w-[850px]
-                "
-              >
-                that feel as good
-              </motion.h2>
-            </div>
-
-            <div className="reveal-mask">
-              <motion.h2
-                initial={{
-                  y: "100%",
-                }}
-                whileInView={{
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.4,
-                }}
-                transition={{
-                  delay: 0.16,
-                  duration: 1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="
-                  heading-xl
-                  text-[#9a8064]
-                "
-              >
-                as they look.
-              </motion.h2>
-            </div>
-
-            {/* =================================================
-                DESCRIPTION
-                ================================================= */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 30,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.4,
-              }}
-              transition={{
-                delay: 0.45,
-                duration: 0.8,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="mt-12 max-w-[530px] sm:mt-16"
-            >
-              <p className="text-base leading-[1.8] text-[#716e67] sm:text-lg">
-                Our approach begins with understanding
-                how people move, live and feel within a
-                space. We combine architecture, material,
-                light and craftsmanship to create interiors
-                that feel considered rather than designed.
-              </p>
-            </motion.div>
-
-            {/* =================================================
-                LINK
-                ================================================= */}
-
-            <motion.a
-              href="#contact"
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.4,
-              }}
-              transition={{
-                delay: 0.6,
-                duration: 0.8,
-              }}
-              className="
-                group
-                mt-10
-                inline-flex
-                items-center
-                gap-4
-              "
-            >
-              <span
-                className="
-                  flex h-11 w-11
-                  items-center justify-center
-                  rounded-full
-                  border border-[#171714]/25
-                  transition-all duration-500
-                  group-hover:bg-[#171714]
-                  group-hover:text-white
-                "
-              >
-                <ArrowUpRight
-                  size={16}
-                  strokeWidth={1.4}
-                  className="
-                    transition-transform
-                    duration-500
-                    group-hover:translate-x-0.5
-                    group-hover:-translate-y-0.5
-                  "
+            
+            {/* Primary Image Container */}
+            <div className="absolute top-0 right-0 w-[82%] h-[82%] bg-[#EAE8E3] overflow-hidden">
+              <AnimatePresence>
+                <motion.img 
+                  key={`main-${slides[currentIndex].id}`}
+                  src={slides[currentIndex].main}
+                  alt={slides[currentIndex].alt}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.4, ease: "easeInOut" }}
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
-              </span>
+              </AnimatePresence>
+            </div>
 
-              <span className="eyebrow">
-                Discover our studio
-              </span>
-            </motion.a>
+            {/* Secondary Overlapping Image Container */}
+            <div className="absolute bottom-10 left-0 z-10 w-[55%] md:w-[48%] h-[50%] bg-[#DCD8D3] overflow-hidden border-[6px] md:border-[8px] border-[#F9F8F6]">
+              <AnimatePresence>
+                <motion.img 
+                  key={`sub-${slides[currentIndex].id}`}
+                  src={slides[currentIndex].sub}
+                  alt={`Detail of ${slides[currentIndex].alt}`}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.4, delay: 0.1, ease: "easeInOut" }}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </AnimatePresence>
+            </div>
+
+            {/* Minimalist Carousel Controls (Arrows Only) */}
+            <div className="absolute bottom-0 right-0 flex items-center space-x-2 z-20 bg-[#F9F8F6] pt-3 pl-4">
+              <button 
+                onClick={handlePrev} 
+                className="p-2 text-[#1A1A1A] hover:text-[#8A8A8A] transition-colors duration-300 focus:outline-none"
+                aria-label="Previous image"
+              >
+                <ArrowLeft className="w-4 h-4 stroke-[1.5]" />
+              </button>
+              <button 
+                onClick={handleNext} 
+                className="p-2 text-[#1A1A1A] hover:text-[#8A8A8A] transition-colors duration-300 focus:outline-none"
+                aria-label="Next image"
+              >
+                <ArrowRight className="w-4 h-4 stroke-[1.5]" />
+              </button>
+            </div>
+
           </div>
 
-          {/* ===================================================
-              RIGHT — IMAGE
-              =================================================== */}
-
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 60,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.2,
-            }}
-            transition={{
-              duration: 1.1,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="
-  relative
-  mt-2
-  lg:mt-16
-"
-          >
-            <div
-              className="
-                media-wrapper
-                aspect-[4/5]
-                bg-[#ebe6de]
-              "
-            >
-              <motion.img
-                initial={{
-                  scale: 1.15,
-                }}
-                whileInView={{
-                  scale: 1,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.2,
-                }}
-                transition={{
-                  duration: 1.4,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                src="/images/studio-interior.png"
-                alt="Minimal contemporary interior"
-                className="h-full w-full object-cover"
-              />
-            </div>
-
-            {/* Image label */}
-
-            <div className="mt-4 flex items-center justify-between">
-              <span className="eyebrow text-[#716e67]">
-                Material / Light / Form
-              </span>
-
-              <span className="eyebrow text-[#716e67]">
-                01
-              </span>
-            </div>
-          </motion.div>
         </div>
+
+        {/* Bottom Row: Disciplines */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-30px" }}
+          variants={textFadeUp}
+          className="mt-12 lg:mt-16 pt-6 border-t border-[#E5E5E5]"
+        >
+          <ul className="flex flex-row items-center gap-6 md:gap-12 text-[10px] md:text-[11px] font-medium uppercase tracking-[0.2em] text-[#8A8A8A]">
+            <li className="hover:text-[#1A1A1A] transition-colors duration-300 cursor-default">Residential</li>
+            <li className="hover:text-[#1A1A1A] transition-colors duration-300 cursor-default">Commercial</li>
+            <li className="hover:text-[#1A1A1A] transition-colors duration-300 cursor-default">Hospitality</li>
+          </ul>
+        </motion.div>
+
       </div>
     </section>
   );
