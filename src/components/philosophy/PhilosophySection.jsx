@@ -1,315 +1,137 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import { useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const PhilosophySection = () => {
-  const sectionRef = useRef(null);
+const philosophies = [
+  {
+    id: "01",
+    label: "Core Belief",
+    title: "Design is not decoration.",
+    description:
+      "It is the way a space makes you feel. Our work begins with understanding how people live, move, gather, and experience a room before a single material is chosen.",
+    image:
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=1200",
+  },
+  {
+    id: "02",
+    label: "Materiality",
+    title: "We let materials speak.",
+    description:
+      "Wood, stone, metal, and glass. We believe in the tactile quality of natural textures that give a space its enduring character and warmth.",
+    image:
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=1200",
+  },
+  {
+    id: "03",
+    label: "Atmosphere",
+    title: "Light shapes the experience.",
+    description:
+      "From the first morning sun to the soft evening shadows. We treat natural and artificial light as foundational architectural elements, not afterthoughts.",
+    image:
+      "https://images.unsplash.com/photo-1600607687644-aac4c15cecb1?auto=format&fit=crop&q=80&w=1200",
+  },
+  {
+    id: "04",
+    label: "Timelessness",
+    title: "Designed for living.",
+    description:
+      "We prioritize proportion, functionality, and true craftsmanship over fleeting trends to create spaces meant to be truly lived in for generations.",
+    image:
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=1200",
+  },
+];
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
+export default function PhilosophySection() {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  /*
-   * Image moves slightly vertically while scrolling.
-   */
-  const imageY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["-8%", "8%"]
-  );
-
-  /*
-   * Subtle image scaling.
-   */
-  const imageScale = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [1.08, 1, 1.08]
-  );
-
-  /*
-   * Content movement.
-   */
-  const contentY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [40, -40]
-  );
+  useEffect(() => {
+    // Increased interval to 4.5 seconds for better readability
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % philosophies.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="
-        relative
-        h-[75svh]
-        min-h-[560px]
-        overflow-hidden
-        bg-[#171714]
-        text-white
-        sm:h-[80svh]
-        lg:h-[85svh]
-      "
-    >
-      {/* =====================================================
-          IMAGE
-          ===================================================== */}
+    <section className="w-full bg-stone-50 py-20 md:py-32 font-sans overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        
+        {/* Section Header */}
+        <div className="text-center mb-16 md:mb-24">
+          <h2 className="text-sm font-medium tracking-[0.2em] text-stone-500 uppercase mb-4">
+            Our Philosophy
+          </h2>
+          <p className="text-3xl md:text-5xl font-serif text-stone-900 tracking-tight">
+            We believe a space should <br className="hidden md:block" />
+            feel as good as it looks.
+          </p>
+        </div>
 
-      <motion.div
-        style={{
-          y: imageY,
-          scale: imageScale,
-        }}
-        className="
-          absolute
-          -inset-[8%]
-          overflow-hidden
-        "
-      >
-        <img
-          src="/images/philosophy-interior.png"
-          alt="Warm architectural interior"
-          className="
-            h-full
-            w-full
-            object-cover
-          "
-        />
-      </motion.div>
-
-      {/* =====================================================
-          IMAGE OVERLAY
-          ===================================================== */}
-
-      <div
-        className="
-          absolute
-          inset-0
-          bg-black/40
-        "
-      />
-
-      <div
-        className="
-          absolute
-          inset-0
-          bg-gradient-to-t
-          from-black/65
-          via-black/20
-          to-black/10
-        "
-      />
-
-      {/* =====================================================
-          CONTENT
-          ===================================================== */}
-
-      <motion.div
-        style={{
-          y: contentY,
-        }}
-        className="
-          relative
-          z-10
-          flex
-          h-full
-          items-end
-        "
-      >
-        <div
-          className="
-            container-interior
-            flex
-            w-full
-            flex-col
-            justify-end
-            pb-10
-            sm:pb-14
-            lg:pb-16
-          "
-        >
-          <div
-            className="
-              grid
-              gap-10
-              lg:grid-cols-[1fr_220px]
-              lg:items-end
-            "
-          >
-            {/* =================================================
-                LEFT CONTENT
-                ================================================= */}
-
-            <div>
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 25,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.4,
-                }}
-                transition={{
-                  duration: 0.8,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="
-                  mb-5
-                  flex
-                  items-center
-                  gap-3
-                "
-              >
-                <span className="h-px w-8 bg-white/60" />
-
-                <span className="eyebrow text-white/70">
-                  Our Philosophy
-                </span>
-              </motion.div>
-
-              <div className="reveal-mask max-w-[1000px]">
-                <motion.h2
-                  initial={{
-                    y: "100%",
-                  }}
-                  whileInView={{
-                    y: 0,
-                  }}
-                  viewport={{
-                    once: true,
-                    amount: 0.35,
-                  }}
-                  transition={{
-                    duration: 1.1,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="
-                    text-[clamp(2.8rem,6vw,6.5rem)]
-                    font-medium
-                    leading-[0.9]
-                    tracking-[-0.06em]
-                  "
-                >
-                  Architecture is a dialogue
-                  between people and place.
-                </motion.h2>
+        {/* Carousel Container */}
+        <div className="relative w-full h-[650px] md:h-[500px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+              className={`absolute inset-0 flex flex-col ${
+                currentIndex % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+              } gap-10 md:gap-20 items-center`}
+            >
+              
+              {/* Image Side - Takes up 55% of width on desktop */}
+              <div className="w-full md:w-[55%] h-[320px] md:h-full relative rounded-3xl overflow-hidden shadow-xl">
+                <motion.img
+                  initial={{ scale: 1.05 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 4.5, ease: "linear" }} // Subtle zoom during the slide's duration
+                  src={philosophies[currentIndex].image}
+                  alt={philosophies[currentIndex].title}
+                  className="object-cover w-full h-full"
+                />
               </div>
 
-              <motion.a
-                href="#studio"
-                initial={{
-                  opacity: 0,
-                  y: 20,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  delay: 0.35,
-                  duration: 0.7,
-                }}
-                className="
-                  group
-                  mt-8
-                  inline-flex
-                  items-center
-                  gap-4
-                "
-              >
-                <span
-                  className="
-                    flex
-                    h-11
-                    w-11
-                    items-center
-                    justify-center
-                    rounded-full
-                    border
-                    border-white/50
-                    transition-all
-                    duration-500
-                    group-hover:bg-white
-                    group-hover:text-[#171714]
-                  "
-                >
-                  <ArrowUpRight
-                    size={16}
-                    strokeWidth={1.4}
-                    className="
-                      transition-transform
-                      duration-500
-                      group-hover:translate-x-0.5
-                      group-hover:-translate-y-0.5
-                    "
-                  />
-                </span>
+              {/* Text Side - Takes up 45% of width on desktop */}
+              <div className="w-full md:w-[45%] flex flex-col justify-center">
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="text-stone-400 font-serif text-xl italic">
+                    {philosophies[currentIndex].id}
+                  </span>
+                  <div className="h-px w-12 bg-stone-300"></div>
+                  <span className="text-xs font-semibold tracking-widest uppercase text-stone-500">
+                    {philosophies[currentIndex].label}
+                  </span>
+                </div>
+                
+                <h3 className="text-3xl md:text-4xl font-serif text-stone-900 mb-6 leading-tight">
+                  {philosophies[currentIndex].title}
+                </h3>
+                
+                <p className="text-base md:text-lg text-stone-600 leading-relaxed max-w-md">
+                  {philosophies[currentIndex].description}
+                </p>
+              </div>
 
-                <span className="eyebrow">
-                  Our approach
-                </span>
-              </motion.a>
-            </div>
-
-            {/* =================================================
-                RIGHT KEYWORDS
-                ================================================= */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-                x: 25,
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                delay: 0.35,
-                duration: 0.8,
-              }}
-              className="
-                flex
-                flex-row
-                gap-5
-                lg:flex-col
-                lg:gap-2
-                lg:text-right
-              "
-            >
-              {[
-                "People",
-                "Places",
-                "Materials",
-                "Stories",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="
-                    eyebrow
-                    text-white/65
-                  "
-                >
-                  {item}
-                </span>
-              ))}
             </motion.div>
-          </div>
+          </AnimatePresence>
         </div>
-      </motion.div>
+
+        {/* Progress Dots Indicator */}
+        <div className="flex justify-center items-center gap-3 mt-12 md:mt-20">
+          {philosophies.map((_, index) => (
+            <div
+              key={index}
+              className={`h-1.5 rounded-full transition-all duration-700 ease-in-out ${
+                index === currentIndex
+                  ? "w-8 bg-stone-800"
+                  : "w-2 bg-stone-300"
+              }`}
+            />
+          ))}
+        </div>
+
+      </div>
     </section>
   );
-};
-
-export default PhilosophySection;
+}
